@@ -1,0 +1,91 @@
+name: CI
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  generate-env-vars:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # https://github.com/marketplace/actions/git-actions
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Run a bunch of commands
+        shell: bash
+        run: |
+          TAG=$(git describe --tags --always)
+          echo "TAG=${TAG}" > .cicd_variables
+          echo "APP_IMAGE=ghcr.io/${GITHUB_REPOSITORY}:${TAG}" >> .cicd_variables
+          echo "APP_IMAGE_RELEASE=ghcr.io/${GITHUB_REPOSITORY}:${TAG}-release" >> .cicd_variables
+          echo "APP_IMAGE_LATEST=ghcr.io/${GITHUB_REPOSITORY}:latest" >> .cicd_variables
+      - name: Test CICD variable file
+        run: cat .cicd_variables
+      - name: Upload CICD variable file
+        uses: actions/upload-artifact@v2
+        with:
+          name: cicd_variables
+          path: .cicd_variables
+  # This workflow contains a single job called "build"
+  build:
+    needs:
+      - generate-env-vars
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Docker login
+        run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u "${GITHUB_ACTOR}" --password-stdin
+      - name: Download all workflow run artifacts
+        id: my-cicd-download
+        uses: actions/download-artifact@v2
+      - name: Import ENV
+        run: cat ${{steps.my-cicd-download.outputs.download-path}}/cicd_variables/.cicd_variables >> $GITHUB_ENV
+      - name: Build app image
+        run: docker build -f ci.Dockerfile -t "${APP_IMAGE}" .
+      - name: Push app image
+        run: docker push "${APP_IMAGE}"
+      - name: Docker logout
+        run: docker logout ghcr.io
+  release:
+    needs:
+      - build
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Docker login
+        run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u "${GITHUB_ACTOR}" --password-stdin
+      - name: Download all workflow run artifacts
+        id: my-cicd-download
+        uses: actions/download-artifact@v2
+      - name: Import ENV
+        run: cat ${{steps.my-cicd-download.outputs.download-path}}/cicd_variables/.cicd_variables >> $GITHUB_ENV
+      - name: Pull app image
+        run: docker pull "${APP_IMAGE}"
+      - name: Tag app image
+        run: |
+          docker tag "${APP_IMAGE}" "${APP_IMAGE_RELEASE}"
+          docker tag "${APP_IMAGE}" "${APP_IMAGE_LATEST}"
+      - name: Push app image
+        run: |
+          docker push "${APP_IMAGE_RELEASE}"
+          docker push "${APP_IMAGE_LATEST}"
+      - name: Docker logout
+        run: docker logout ghcr.io
