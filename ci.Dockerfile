@@ -20,3 +20,4 @@ RUN apt-get update \
 
 USER ${USER}
 CMD sleep infinity
+
