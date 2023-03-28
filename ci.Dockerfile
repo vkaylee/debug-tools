@@ -16,6 +16,7 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update \
     && apt-get install vim -y \
     && apt-get install nano -y \
+    && apt-get install -y net-tools iproute2 \
     && apt-get install telnet -y
 
 USER ${USER}

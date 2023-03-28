@@ -13,7 +13,6 @@ This image will be used to test your work in your orchestrator with some pre-ins
 - Python
 - Curl
 - Wget
-- ss
 - tar
 - UnZip
 - gzip
@@ -23,3 +22,14 @@ This image will be used to test your work in your orchestrator with some pre-ins
 - nano
 - telnet
 - scp
+- ssh
+- ifconfig
+- ip
+- route
+- arp
+- nameif
+- ipmaddr
+- iptunnel
+- netstat
+- ss
+- nstat
