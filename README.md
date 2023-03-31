@@ -37,3 +37,7 @@ ghcr.io/vleedev/debug-tools:main
 - netstat
 - ss
 - nstat
+### DNS tools
+- `dig` (in dnsutils) - query the DNS in various ways
+- `nslookup` (in dnsutils) - the older way to do it
+- `nsupdate` (in dnsutils) - perform dynamic updates (See RFC2136)
