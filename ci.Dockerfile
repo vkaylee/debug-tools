@@ -18,6 +18,7 @@ RUN apt-get update \
     && apt-get install nano -y \
     && apt-get install -y net-tools iproute2 \
     && apt-get install -y dnsutils \
+    && apt-get install -y apache2-utils \
     && apt-get install telnet -y
 
 USER ${USER}

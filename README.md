@@ -12,6 +12,7 @@ ghcr.io/vkaylee/debug-tools:main
 - Docker
 
 ## Pre-installed tools
+- Apache HTTP Server (utility programs for web servers) https://packages.debian.org/buster/apache2-utils
 - Buster OS ENV
 - Bash
 - Python
