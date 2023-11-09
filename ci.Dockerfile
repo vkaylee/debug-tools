@@ -20,7 +20,8 @@ RUN apt-get update \
     && apt-get install -y dnsutils \
     && apt-get install -y apache2-utils \
     && apt-get install telnet -y
-
+# fortio https://github.com/fortio/fortio
+RUN curl -L https://github.com/fortio/fortio/releases/download/v1.60.3/fortio-linux_amd64-1.60.3.tgz | tar -C / -xvzpf -
 USER ${USER}
 CMD sleep infinity
 
