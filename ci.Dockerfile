@@ -23,7 +23,7 @@ RUN apt-get update \
 # fortio https://github.com/fortio/fortio
 RUN curl -L https://github.com/fortio/fortio/releases/download/v1.60.3/fortio-linux_amd64-1.60.3.tgz | tar -C / -xvzpf -
 # go_http_server_mock_test https://github.com/vkaylee/go_http_server_mock_test
-RUN curl -L https://github.com/vkaylee/go_http_server_mock_test/releases/download/v0.0.1/go_http_server_mock_test_0.0.1_linux_amd64.tar.gz | tar -C / -xvzpf -
+RUN curl -L https://github.com/vkaylee/go_http_server_mock_test/releases/download/v0.0.2/go_http_server_mock_test_Linux_x86_64.tar.gz | tar -C / -xvzpf -
 USER ${USER}
 CMD sleep infinity
 
