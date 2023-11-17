@@ -42,6 +42,8 @@ vleedev/debug-tools:main
 - netstat
 - ss
 - nstat
+### Container tools
+- `podman` Manage containers, pods, and images with Podman https://podman.io/
 ### DNS tools
 - `dig` (in dnsutils) - query the DNS in various ways
 - `nslookup` (in dnsutils) - the older way to do it

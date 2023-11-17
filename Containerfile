@@ -18,6 +18,7 @@ RUN dnf install -y iproute
 RUN dnf install -y dnsutils
 RUN dnf install -y httpd-tools
 RUN dnf install -y telnet
+RUN dnf install -y podman
 # Iperf3: https://iperf.fr/iperf-download.php#fedora
 RUN dnf install -y https://iperf.fr/download/fedora/iperf3-3.1.3-1.fc24.x86_64.rpm
 # fortio https://github.com/fortio/fortio
