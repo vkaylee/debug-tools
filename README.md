@@ -1,10 +1,14 @@
 # debug-tools
 This image will be used to test your work in your orchestrator with some pre-installed tools.
-## Container image address
+## Container image addresses
+### On github registry
 ```
 ghcr.io/vkaylee/debug-tools:main
 ```
-
+### On docker hub registry
+```
+vleedev/debug-tools:main
+```
 ## Compatible
 
 - Openshift
