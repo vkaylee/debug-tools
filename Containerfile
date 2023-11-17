@@ -18,6 +18,8 @@ RUN dnf install -y iproute
 RUN dnf install -y dnsutils
 RUN dnf install -y httpd-tools
 RUN dnf install -y telnet
+# Iperf3: https://iperf.fr/iperf-download.php#fedora
+RUN dnf install -y https://iperf.fr/download/fedora/iperf3-3.1.3-1.fc24.x86_64.rpm
 # fortio https://github.com/fortio/fortio
 RUN curl -L https://github.com/fortio/fortio/releases/download/v1.60.3/fortio-linux_amd64-1.60.3.tgz | tar -C / -xvzpf -
 # go_http_server_mock_test https://github.com/vkaylee/go_http_server_mock_test
