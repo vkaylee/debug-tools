@@ -11,6 +11,9 @@ ENV SHELL /bin/bash
 # Use shell as defined to run some scripts after
 SHELL ["/bin/bash", "-c"]
 RUN dnf install -y python3
+RUN dnf install -y unzip
+RUN dnf install -y openssh-clients
+RUN dnf install -y iputils
 RUN dnf install -y vim
 RUN dnf install -y nano
 RUN dnf install -y net-tools
