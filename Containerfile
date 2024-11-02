@@ -1,6 +1,7 @@
 ARG USER=user
 ARG HOME=/home/user
 FROM fedora:39
+ENV USER ${USER}
 RUN useradd --create-home --shell /bin/bash ${USER}
 ENV HOME ${HOME}
 WORKDIR ${HOME}
