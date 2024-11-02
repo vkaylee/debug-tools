@@ -1,10 +1,8 @@
-FROM fedora:39
-ARG USER=2000
+ARG USER=user
 ARG HOME=/home/user
+FROM fedora:39
+RUN useradd --create-home --shell /bin/bash ${USER}
 ENV HOME ${HOME}
-RUN mkdir -p ${HOME} \
-    && chgrp -R 0 ${HOME} \
-    && chmod -R g=u ${HOME}
 WORKDIR ${HOME}
 # Set default shell ENV
 ENV SHELL /bin/bash
