@@ -1,10 +1,10 @@
+FROM fedora:39
 ARG USER=user
 ARG HOME=/home/user
-FROM fedora:39
 ENV USER ${USER}
-RUN useradd -rm -d ${HOME} -s /bin/bash -g root -G sudo -u 1001 ${USER}
 ENV HOME ${HOME}
 WORKDIR ${HOME}
+RUN useradd -rm -d ${HOME} -s /bin/bash -g root -G sudo -u 1001 ${USER}
 # Set default shell ENV
 ENV SHELL /bin/bash
 # Use shell as defined to run some scripts after
