@@ -2,7 +2,7 @@ ARG USER=user
 ARG HOME=/home/user
 FROM fedora:39
 ENV USER ${USER}
-RUN useradd --create-home --shell /bin/bash ${USER}
+RUN useradd -rm -d ${HOME} -s /bin/bash -g root -G sudo -u 1001 ${USER}
 ENV HOME ${HOME}
 WORKDIR ${HOME}
 # Set default shell ENV
